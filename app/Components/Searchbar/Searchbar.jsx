@@ -16,13 +16,13 @@ const Searchbar = () => {
   const handleSubmit = (event) => {};
 
   return (
-    <div className="bg-white p-4 rounded-md shadow-md">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="flex flex-col md:flex-row bg-slate-50 rounded-3xl shadow-xl py-4 px-8 border md:justify-evenly">
+      <div className="flex flex-col md:flex-row">
         {/* From Dropdown */}
-        <div>
+        <div className="md:mr-4 mb-4 md:mb-0">
           <label
             htmlFor="from"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-md font-medium text-black"
           >
             From
           </label>
@@ -31,7 +31,7 @@ const Searchbar = () => {
             name="from"
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
           >
             {/* Replace with actual options */}
             <option value="city1">City 1</option>
@@ -40,10 +40,10 @@ const Searchbar = () => {
         </div>
 
         {/* To Dropdown */}
-        <div>
+        <div className="md:mr-4 mb-4 md:mb-0">
           <label
             htmlFor="to"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-md font-medium text-black"
           >
             To
           </label>
@@ -52,7 +52,7 @@ const Searchbar = () => {
             name="to"
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
           >
             {/* Replace with actual options */}
             <option value="city1">City 1</option>
@@ -61,10 +61,10 @@ const Searchbar = () => {
         </div>
 
         {/* Trip Type Dropdown */}
-        <div>
+        <div className="md:mr-4 mb-4 md:mb-0">
           <label
             htmlFor="tripType"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-md font-medium text-black"
           >
             Trip Type
           </label>
@@ -73,83 +73,85 @@ const Searchbar = () => {
             name="tripType"
             value={tripType}
             onChange={handleTripTypeChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
           >
             <option value="oneWay">One Way</option>
             <option value="roundTrip">Round Trip</option>
           </select>
         </div>
-      </div>
 
-      {/* Departure Date */}
-      <div className="mt-4">
-        <label
-          htmlFor="departureDate"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Departure Date
-        </label>
-        <input
-          type="date"
-          id="departureDate"
-          name="departureDate"
-          value={departureDate}
-          onChange={(e) => setDepartureDate(e.target.value)}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-        />
-      </div>
-
-      {/* Arrival Date (only for Round Trip) */}
-      {tripType === "roundTrip" && (
-        <div className="mt-4">
+        {/* Departure Date */}
+        <div className="md:mr-4 mb-4 md:mb-0">
           <label
-            htmlFor="arrivalDate"
-            className="block text-sm font-medium text-gray-700"
+            htmlFor="departureDate"
+            className="block text-md font-medium text-black"
           >
-            Arrival Date
+            Departure Date
           </label>
           <input
             type="date"
-            id="arrivalDate"
-            name="arrivalDate"
-            value={arrivalDate}
-            onChange={(e) => setArrivalDate(e.target.value)}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            id="departureDate"
+            name="departureDate"
+            value={departureDate}
+            onChange={(e) => setDepartureDate(e.target.value)}
+            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
-      )}
 
-      {/* Flight Class Dropdown */}
-      <div className="mt-4">
-        <label
-          htmlFor="flightClass"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Flight Class
-        </label>
-        <select
-          id="flightClass"
-          name="flightClass"
-          value={flightClass}
-          onChange={(e) => setFlightClass(e.target.value)}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-        >
-          {/* Replace with actual options */}
-          <option value="economy">Economy</option>
-          <option value="business">Business</option>
-        </select>
-      </div>
-      <div className="mt-6">
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-        >
-          Search
-        </button>
+        {/* Arrival Date (only for Round Trip) */}
+        {tripType === "roundTrip" && (
+          <div className="md:mr-4 mb-4 md:mb-0">
+            <label
+              htmlFor="arrivalDate"
+              className="block text-md font-medium text-black"
+            >
+              Arrival Date
+            </label>
+            <input
+              type="date"
+              id="arrivalDate"
+              name="arrivalDate"
+              value={arrivalDate}
+              onChange={(e) => setArrivalDate(e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            />
+          </div>
+        )}
+
+        {/* Flight Class Dropdown */}
+        <div className="md:mr-4 mb-4 md:mb-0">
+          <label
+            htmlFor="flightClass"
+            className="block text-md font-medium text-black"
+          >
+            Flight Class
+          </label>
+          <select
+            id="flightClass"
+            name="flightClass"
+            value={flightClass}
+            onChange={(e) => setFlightClass(e.target.value)}
+            className="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          >
+            {/* Replace with actual options */}
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+          </select>
+        </div>
+
+        {/* Submit Button */}
+        <div className="md:mr-4 mb-4 md:mb-0">
+          <span className="">&nbsp;</span>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-
 export default Searchbar;

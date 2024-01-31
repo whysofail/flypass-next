@@ -3,6 +3,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 import Navbar from "./Components/Navbar/Navbar";
+import PathChecker from "./PathChecker";
 
 export const metadata = {
   title: "Create Next App",
@@ -13,8 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
+        <PathChecker>
         {children}
+        </PathChecker>
       </body>
     </html>
   );

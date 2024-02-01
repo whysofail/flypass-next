@@ -1,30 +1,31 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
-const LoginForm = ({ onLogin }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-  
-    const handleLogin = () => {
-      // Validate email and password if needed
-  
-      // Simulate a login action for demonstration purposes
-      // In a real application, you would make an API request to authenticate the user
-      // and handle the login logic on the server side
-      const user = {
-        id: 1,
-        email: 'user@example.com',
-      };
-  
-      // Call the onLogin callback with the authenticated user
-      onLogin(user);
-    };
-  
-    return (
-      <div className="p-8 mx-auto bg-white shadow-md rounded-lg border-2">
-        <h1 className="text-2xl font-semibold mb-4">Login</h1>
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      signIn("credentials", {
+        email: email,
+        password: password,
+        callbackUrl: "/",
+      });
+    } catch (error) {}
+  };
+
+  return (
+    <div className="p-8 mx-auto bg-white shadow-md rounded-lg border-2">
+      <h1 className="text-2xl font-semibold mb-4">Login</h1>
+      <form>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email
           </label>
           <input
@@ -36,7 +37,10 @@ const LoginForm = ({ onLogin }) => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
+          >
             Password
           </label>
           <input
@@ -54,8 +58,9 @@ const LoginForm = ({ onLogin }) => {
         >
           Login
         </button>
-      </div>
-    );
-  };
-  
-  export default LoginForm;
+      </form>
+    </div>
+  );
+};
+
+export default LoginForm;

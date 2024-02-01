@@ -1,6 +1,10 @@
 import Link from "next/link";
-
+import { signOut, useSession } from "next-auth/react";
+import useLogout from "@/app/hooks/Logout";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const NavItem = [
     {
       name: "Home",
@@ -11,7 +15,12 @@ const Navbar = () => {
       link: "/booking",
     },
   ];
+  const logout = useLogout();
 
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -38,8 +47,32 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               {NavItem.map((e, i) => (
-                <li key={i}>{e.name}</li>
+                <li key={i}>
+                  <a as={Link} href={e.link}>
+                    {e.name}
+                  </a>
+                </li>
               ))}
+              {session ? (
+                <>
+                  <li>
+                    <a href="" className="btn" onClick={() => handleLogout()}>
+                      Sign Out
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <a as={Link} href="/login">
+                      Login
+                    </a>
+                  </li>
+                  <li>
+                    <a className="">Register</a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">Flypass</a>
@@ -56,10 +89,22 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end gap-3">
-          <a as={Link} href="/login" className="btn  btn-ghost">
-            Login
-          </a>
-          <a className="btn">Register</a>
+          {session ? (
+            <>
+              {session.user.email}
+              <a href="" className="btn" onClick={handleLogout}>
+                Sign Out
+              </a>
+            </>
+          ) : (
+            <div className="flex gap-3">
+              <a as={Link} href="/login" className="btn">
+                Login
+              </a>
+
+              <a className="btn btn-ghost">Register</a>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -13,7 +13,12 @@
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-virtualized": "^9.22.5"
+    "react-select": "^5.8.0",
+    "react-select-virtualized": "^5.5.1",
+    "react-virtualized": "^9.22.5",
+    "react-virtualized-auto-sizer": "^1.0.21",
+    "react-window": "^1.8.10",
+    "react-window-infinite-loader": "^1.0.9"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

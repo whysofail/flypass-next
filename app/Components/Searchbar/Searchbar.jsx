@@ -1,51 +1,21 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FixedSizeList } from "react-window";
-import dynamic from "next/dynamic";
-const AsyncSelect = dynamic(() => import("react-select/async"), { ssr: false });
+import { useRouter } from "next/navigation";
 
-const CustomDropdown = ({ options, selectProps, innerRef }) => {
-  const { menuIsOpen, inputValue } = selectProps;
-
-  // Filter options based on input value
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(inputValue.toLowerCase()),
-  );
-
-  return (
-    <div
-      ref={innerRef}
-      style={{
-        display: menuIsOpen ? "block" : "none",
-        position: "absolute",
-        zIndex: 2,
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-        background: "white",
-        color: "black",
-      }}
-    >
-      {/* Render the filtered options using react-window */}
-      <FixedSizeList
-        height={150}
-        itemCount={filteredOptions.length}
-        itemSize={35}
-        width={100}
-      >
-        {({ index, style }) => (
-          <div style={style}>{filteredOptions[index]}</div>
-        )}
-      </FixedSizeList>
-    </div>
-  );
-};
+import ReactSelect from "./ReactSelect";
 
 const Searchbar = () => {
+  const router = useRouter();
+
   const [options, setOptions] = useState([]);
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
+  const [tripType, setTripType] = useState("0");
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const [flightClass, setFlightClass] = useState("");
 
   useEffect(() => {
-    // Fetch options data from the API when the component mounts
     const fetchOptions = async () => {
       try {
         const url = "http://localhost:5000/v1/airport";
@@ -61,14 +31,13 @@ const Searchbar = () => {
   }, []);
 
   const loadOptions = (inputValue, callback) => {
-    // Simulate an asynchronous response
     setTimeout(() => {
       const filteredOptions = options.filter((option) =>
         option.name.toLowerCase().includes(inputValue.toLowerCase()),
       );
 
       const transformedOptions = filteredOptions.map((option) => ({
-        value: option.id,
+        value: option.iata,
         label: `${option.name} (${option.iata}) - ${option.city}, ${option.country}`,
       }));
 
@@ -76,25 +45,134 @@ const Searchbar = () => {
     }, 1000);
   };
 
+  const handleTripTypeChange = (event) => {
+    setTripType(event.target.value);
+  };
+
+  const handleFormSubmit = () => {
+    router.push(
+      `/flight?depDate=${departureDate}&depAirport=${
+        from ? from.value : from
+      }&arrAirport=${to ? to.value : to}`,
+    );
+  };
   return (
-    <div className="flex flex-col md:flex-row bg-slate-50 rounded-3xl shadow-xl py-4 px-8 border md:justify-evenly">
-      <div className="md:mr-4 mb-4 md:mb-0  grow">
+    <div className="flex flex-col md:flex-row bg-slate-50 rounded-3xl shadow-xl py-4 px-8 border md:justify-evenly items-center">
+      <div className="md:mr-4 mb-4 md:mb-0 min-w-60 max-w-60">
         <label htmlFor="from" className="block text-md font-medium text-black">
           From
         </label>
-        <AsyncSelect
-          loadOptions={loadOptions}
-          components={{
-            Dropdown: (props) => (
-              <CustomDropdown
-                options={options}
-                selectProps={props.selectProps}
-                innerRef={props.innerProps.ref}
-              />
-            ),
-          }}
-          placeholder="Select an airport..."
+        <ReactSelect
+          options={loadOptions}
+          onChange={(selectedValue) => setFrom(selectedValue)}
+          value={from}
+          placeholder="Select an Airport"
         />
+      </div>
+
+      <div className="md:mr-4 mb-4 md:mb-0 min-w-60 max-w-60">
+        <label htmlFor="from" className="block text-md font-medium text-black">
+          To
+        </label>
+        <ReactSelect
+          options={loadOptions}
+          onChange={(selectedValue) => setTo(selectedValue)}
+          value={to}
+          placeholder="Select an Airport"
+        />
+      </div>
+
+      {/* Trip Type Dropdown */}
+      <div className="md:mr-4 mb-4 md:mb-0 max-w-60">
+        <label
+          htmlFor="tripType"
+          className="block text-md font-medium text-black"
+        >
+          Trip Type
+        </label>
+        <select
+          id="tripType"
+          name="tripType"
+          value={tripType}
+          onChange={handleTripTypeChange}
+          className=" p-[0.7rem] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
+        >
+          <option value="0" defaultValue="0" disabled>
+            Select
+          </option>
+          <option value="oneWay">One Way</option>
+          <option value="roundTrip">Round Trip</option>
+        </select>
+      </div>
+
+      {/* Departure Date */}
+      <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+        <label
+          htmlFor="departureDate"
+          className="block text-md font-medium text-black"
+        >
+          Departure Date
+        </label>
+        <input
+          type="date"
+          id="departureDate"
+          name="departureDate"
+          value={departureDate}
+          onChange={(e) => setDepartureDate(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
+        />
+      </div>
+
+      {/* Arrival Date (only for Round Trip) */}
+      {tripType === "roundTrip" && (
+        <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+          <label
+            htmlFor="arrivalDate"
+            className="block text-md font-medium text-black"
+          >
+            Arrival Date
+          </label>
+          <input
+            type="date"
+            id="arrivalDate"
+            name="arrivalDate"
+            value={returnDate}
+            onChange={(e) => setReturnDate(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+      )}
+
+      {/* Flight Class Dropdown */}
+      <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+        <label
+          htmlFor="flightClass"
+          className="block text-md font-medium text-black"
+        >
+          Flight Class
+        </label>
+        <select
+          id="flightClass"
+          name="flightClass"
+          value={flightClass}
+          onChange={(e) => setFlightClass(e.target.value)}
+          className="p-[0.6rem] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
+        >
+          {/* Replace with actual options */}
+          <option value="economy">Economy</option>
+          <option value="business">Business</option>
+        </select>
+      </div>
+
+      {/* Submit Button */}
+      <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+        <span className="">&nbsp;</span>
+        <button
+          onClick={handleFormSubmit}
+          className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Search
+        </button>
       </div>
     </div>
   );

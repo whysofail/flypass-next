@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import useLogout from "@/app/hooks/Logout";
+import useLogout from "@/app/Hooks/Logout";
 import { useRouter } from "next/navigation";
 const Navbar = () => {
   const { data: session } = useSession();

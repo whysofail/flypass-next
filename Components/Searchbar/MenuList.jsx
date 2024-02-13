@@ -35,7 +35,7 @@ const MenuList = ({ options, children, getValue, ...rest }) => {
     <Virtuoso
       ref={virtuosoRef}
       overscan={{ main: 12, reverse: 12 }}
-      style={{ height: `${getListHeight(children.length)}px` }}
+      style={{ height: `${getListHeight(children.length) + 100}px` }}
       totalCount={children.length}
       itemContent={(index) => <InnerItem children={children[index]} />}
     />

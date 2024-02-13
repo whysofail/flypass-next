@@ -51,14 +51,14 @@ const Searchbar = () => {
 
   const handleFormSubmit = () => {
     router.push(
-      `/flight?depDate=${departureDate}&depAirport=${
+      `/flight?depDate=${departureDate}&arrDate=${returnDate}&depAirport=${
         from ? from.value : from
       }&arrAirport=${to ? to.value : to}`,
     );
   };
   return (
-    <div className="flex flex-col md:flex-row bg-slate-50 rounded-3xl shadow-xl py-4 px-8 border md:justify-evenly items-center">
-      <div className="md:mr-4 mb-4 md:mb-0 min-w-60 max-w-60">
+    <div className="flex flex-col flex-wrap md:flex-row bg-slate-50 rounded-3xl shadow-xl py-4 px-8 border md:justify-evenly items-center">
+      <div className="md:mr-4 mb-4 md:mb-0 w-52">
         <label htmlFor="from" className="block text-md font-medium text-black">
           From
         </label>
@@ -70,7 +70,7 @@ const Searchbar = () => {
         />
       </div>
 
-      <div className="md:mr-4 mb-4 md:mb-0 min-w-60 max-w-60">
+      <div className="md:mr-4 mb-4 md:mb-0 w-52">
         <label htmlFor="from" className="block text-md font-medium text-black">
           To
         </label>
@@ -106,7 +106,7 @@ const Searchbar = () => {
       </div>
 
       {/* Departure Date */}
-      <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+      <div className="md:mr-4 mb-4 md:mb-0  ">
         <label
           htmlFor="departureDate"
           className="block text-md font-medium text-black"
@@ -119,13 +119,13 @@ const Searchbar = () => {
           name="departureDate"
           value={departureDate}
           onChange={(e) => setDepartureDate(e.target.value)}
-          className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
+          className="w-36 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
         />
       </div>
 
       {/* Arrival Date (only for Round Trip) */}
       {tripType === "roundTrip" && (
-        <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+        <div className="md:mr-4 mb-4 md:mb-0  ">
           <label
             htmlFor="arrivalDate"
             className="block text-md font-medium text-black"
@@ -138,13 +138,13 @@ const Searchbar = () => {
             name="arrivalDate"
             value={returnDate}
             onChange={(e) => setReturnDate(e.target.value)}
-            className="p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+            className="w-36 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
           />
         </div>
       )}
 
       {/* Flight Class Dropdown */}
-      <div className="md:mr-4 mb-4 md:mb-0  max-w-60">
+      <div className="md:mr-4 mb-4 md:mb-0 ">
         <label
           htmlFor="flightClass"
           className="block text-md font-medium text-black"
@@ -156,7 +156,7 @@ const Searchbar = () => {
           name="flightClass"
           value={flightClass}
           onChange={(e) => setFlightClass(e.target.value)}
-          className="p-[0.6rem] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
+          className=" p-[0.6rem] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300 text-black"
         >
           {/* Replace with actual options */}
           <option value="economy">Economy</option>

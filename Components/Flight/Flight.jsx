@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const Flight = ({ flight }) => {
+const Flight = ({ flight, onSetFlight }) => {
   const {
     id,
     flightCode,
@@ -28,7 +28,7 @@ const Flight = ({ flight }) => {
   }).format(price);
 
   return (
-    <div className="card  bg-base-100 shadow-xl py-2 px-12">
+    <div className="card bg-base-100 border border-slate-300 shadow-xl py-2 px-12">
       <div className="card-body flex flex-row flex-wrap max-w-full justify-between">
         <div>
           <h2 className="card-title">{Airline.name}</h2>
@@ -63,8 +63,13 @@ const Flight = ({ flight }) => {
             <span>/pax</span>
           </div>
 
-          <div class="card-actions pt-4 justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+          <div className="card-actions pt-4 justify-end">
+            <button
+              className="btn btn-primary"
+              onClick={() => onSetFlight(flight)}
+            >
+              Book
+            </button>
           </div>
         </div>
       </div>

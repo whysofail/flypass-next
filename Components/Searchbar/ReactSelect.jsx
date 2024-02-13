@@ -16,6 +16,7 @@ const ReactSelect = ({ options, value, onChange, placeholder }) => {
       loadOptions={options}
       value={value && [value]}
       onChange={onChange}
+      className="w-full"
       classNamePrefix="react-select"
       placeholder={placeholder}
       components={{

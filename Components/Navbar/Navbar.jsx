@@ -1,26 +1,21 @@
+"use client";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
-import useLogout from "@/app/Hooks/Logout";
-import { useRouter } from "next/navigation";
+import { SignInButton, SignOutButton } from "./AuthButton";
+import { useSession } from "next-auth/react";
+
 const Navbar = () => {
   const { data: session } = useSession();
-  const router = useRouter();
+
   const NavItem = [
     {
       name: "Home",
       link: "/",
     },
     {
-      name: "Booking",
+      name: "My Booking",
       link: "/booking",
     },
   ];
-  const logout = useLogout();
-
-  const handleLogout = () => {
-    logout();
-    router.push("/");
-  };
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -56,17 +51,13 @@ const Navbar = () => {
               {session ? (
                 <>
                   <li>
-                    <a href="" className="btn" onClick={() => handleLogout()}>
-                      Sign Out
-                    </a>
+                    <SignOutButton />
                   </li>
                 </>
               ) : (
                 <>
                   <li>
-                    <a as={Link} href="/login">
-                      Login
-                    </a>
+                    <SignInButton />
                   </li>
                   <li>
                     <a className="">Register</a>
@@ -92,15 +83,11 @@ const Navbar = () => {
           {session ? (
             <>
               {session.user.email}
-              <a href="" className="btn" onClick={handleLogout}>
-                Sign Out
-              </a>
+              <SignOutButton />
             </>
           ) : (
             <div className="flex gap-3">
-              <a as={Link} href="/login" className="btn">
-                Login
-              </a>
+              <SignInButton />
 
               <a className="btn btn-ghost">Register</a>
             </div>

@@ -1,10 +1,10 @@
-import LoginForm from "../Components/Login/LoginForm"
+import LoginForm from "../../Components/Login/LoginForm";
 const Login = () => {
   return (
     <div className="flex min-h-screen flex-row items-center">
-      <LoginForm/>
+      <LoginForm />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import Navbar from "./Components/Navbar/Navbar";
+import Navbar from "../Components/Navbar/Navbar";
 
 const PathChecker = ({ children }) => {
   const path = usePathname();

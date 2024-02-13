@@ -1,5 +1,5 @@
-import Hero from "./Components/Hero/Hero";
-import Searchbar from "./Components/Searchbar/Searchbar";
+import Hero from "../Components/Hero/Hero";
+import Searchbar from "../Components/Searchbar/Searchbar";
 export const metadata = {
   title: "Home",
 };

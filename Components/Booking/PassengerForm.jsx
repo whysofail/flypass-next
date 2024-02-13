@@ -7,7 +7,7 @@ const PassengerForm = ({ passengers, onPassengerUpdate }) => {
       {
         firstName: "",
         lastName: "",
-        identityType: "",
+        identityType: "ktp",
         identityNumber: "",
         baggage: [15], // Set default value as an array
       },
@@ -25,7 +25,7 @@ const PassengerForm = ({ passengers, onPassengerUpdate }) => {
     updatedPassengers.splice(index, 1);
     onPassengerUpdate(updatedPassengers);
   };
-
+  
   return (
     <div className="card py-4">
       <h2 className="text-xl font-semibold mb-4">Passenger Details</h2>
@@ -73,7 +73,7 @@ const PassengerForm = ({ passengers, onPassengerUpdate }) => {
             }
           >
             <option value="ktp">KTP</option>
-            <option value="paspor">Paspor</option>
+            <option value="passport">Passport</option>
           </select>
 
           <label className="block mb-1 text-sm font-medium">

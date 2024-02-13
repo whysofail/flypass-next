@@ -108,6 +108,7 @@ const Flight = () => {
   const handleFormSubmit = async (formData, passenger) => {
     try {
       // Check if session exists and access token is not null
+      
       if (!session || !session.accessToken) {
         throw new Error("Access token is missing");
       }

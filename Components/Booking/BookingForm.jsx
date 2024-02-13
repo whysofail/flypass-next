@@ -24,7 +24,7 @@ const BookingForm = ({ onBookFlight, onPassengerUpdate, children }) => {
     // Update passengers in the parent component
     onPassengerUpdate(updatedPassengers);
   };
-
+  console.log(passengers)
   const handleBookFlight = () => {
     // Check if necessary data is present before booking
     if (contactInfo.title && contactInfo.firstName && contactInfo.lastName) {

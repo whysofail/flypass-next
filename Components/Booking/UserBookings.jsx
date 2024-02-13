@@ -69,9 +69,9 @@ const BookingCard = ({ booking }) => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Return Flight Details</h3>
           <p className="font-medium">
-          {booking.flight2.departureAirport.name} -{" "}
-          {booking.flight2.arrivalAirport.name}
-        </p>
+            {booking.flight2.departureAirport.name} -{" "}
+            {booking.flight2.arrivalAirport.name}
+          </p>
           <p className="text-gray-600 mb-2">
             Flight Code: {booking.flight2.flightCode}
           </p>
@@ -119,18 +119,18 @@ const BookingCard = ({ booking }) => {
           ? ""
           : booking.Passengers.map((passenger) => (
               <div className="flex justify-between">
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                   <span className="font-bold text-md">Full name</span>
                   <span>
                     {passenger.firstName}&nbsp;
                     {passenger.lastName}
                   </span>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                   <span className="font-bold text-md">Identity Type</span>
                   <span>{passenger.identityType}</span>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                   <span className="font-bold text-md">Identity Number</span>
                   <span>{passenger.identityNumber}</span>
                 </div>

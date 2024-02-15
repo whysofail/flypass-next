@@ -1,36 +1,31 @@
-"use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 
-const useDataFetching = (url, authToken) => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+const baseURL = "http://localhost:5000/v1";
 
+export const useDataFetching = ({ url, method, authToken }) => {
+  const [response, setResponse] = useState(undefined);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  console.log({ url, method, authToken });
+  const fetchData = async (params) => {
+    try {
+      const response = await fetch(baseURL + url, {
+        method,
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      const result = await response.json();
+      setResponse(result);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        setData(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    fetchData(url, method, authToken);
+  }, []);
 
-    fetchData();
-    return () => {
-      // Cancel the request
-    };
-  }, [url, authToken]);
-
-  return { data, isLoading, error };
+  return { response, error, loading };
 };
 
 export default useDataFetching;

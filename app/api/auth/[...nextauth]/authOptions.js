@@ -50,9 +50,9 @@ const authOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, _, user }) {
       if (user) {
-        token.accessToken = user.accessToken;
+        token.accessToken = user?.accessToken;
         token.role = user.role;
         token.id = user.id;
       }

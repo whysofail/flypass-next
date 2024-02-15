@@ -3,7 +3,8 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useCallback } from "react";
 
-export default function ExampleClientComponent() {
+export default function ExampleClientComponent({ session }) {
+  console.log(session);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

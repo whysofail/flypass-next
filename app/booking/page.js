@@ -1,38 +1,48 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import UserBookings from "../../Components/Booking/UserBookings";
+import { useSession } from "next-auth/react";
 import useDataFetching from "../../Hooks/useDataFetching";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Booking = () => {
+  const baseURL = "http://localhost:5000/v1";
+  const [booking, setBooking] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResult, setSearchResult] = useState(null);
-  const { data: session, status } = useSession();
-  const url = "http://localhost:5000/v1/bookings";
-
-  // Check if session exists and contains token before fetching data
-  const authToken = session?.accessToken || null;
-
-  // Call the custom hook to fetch data
-  const { data, isLoading, error } = useDataFetching(
-    url,
-    authToken && status === "authenticated" ? authToken : null,
-  );
+  const { data: session, loading } = useSession();
 
   useEffect(() => {
-    // Initialize searchResult with default data on component mount
-    setSearchResult(data?.booking);
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        if (session) {
+          const response = await fetch(`${baseURL}/bookings`, {
+            headers: {
+              Authorization: `Bearer ${session.accessToken}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Failed to fetch bookings");
+          }
+          const data = await response.json();
+          setBooking(data.booking);
+          setSearchResult(data);
+        }
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleSearchBookingByCode = async (bookingCode) => {
     try {
       console.log(bookingCode);
       const response = await axios.get(
-        `${url}/search?bookingcode=${bookingCode}`,
+        `${baseURL}/search?bookingcode=${bookingCode}`, // Fixed baseURL
         {
           headers: {
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${session.accessToken}`, // Used session.accessToken
           },
         },
       );
@@ -45,7 +55,7 @@ const Booking = () => {
 
   // Function to reset search result
   const resetSearch = () => {
-    setSearchResult(data?.booking);
+    setSearchResult(booking); // Changed to use booking state
     setSearchQuery("");
   };
 
@@ -70,7 +80,6 @@ const Booking = () => {
         </button>
       </div>
 
-
       {searchResult && searchResult.length > 0 && (
         <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
           <h2 className="font-bold text-lg">Search Result</h2>
@@ -80,17 +89,15 @@ const Booking = () => {
         </div>
       )}
 
-
-      {!searchResult && (
+      {booking.length > 0 && (
         <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
           <h2 className="font-bold text-lg">Your Bookings</h2>
-          {data?.booking.map((booking, index) => (
+          {booking.map((booking, index) => (
             <UserBookings key={index} booking={booking} />
           ))}
         </div>
       )}
 
-    
       {searchResult && searchResult.length === 0 && (
         <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
           <h2 className="font-bold text-lg">No Data Found</h2>

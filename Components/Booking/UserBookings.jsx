@@ -1,13 +1,13 @@
+"use client";
 import React, { useState } from "react";
 import moment from "moment";
 
-const BookingCard = ({ booking }) => {
+const UserBookings = ({ booking }) => {
   // Check if booking is undefined or null
   if (!booking) {
     return <div>No booking available</div>;
   }
-  console.log(booking);
-  // State to toggle passenger details visibility
+
   const [isPassengerVisible, setIsPassengerVisible] = useState(false);
 
   // Function to toggle passenger details visibility
@@ -61,10 +61,7 @@ const BookingCard = ({ booking }) => {
             </p>
           </div>
         </div>
-
-        {/* Render other flight details as needed */}
       </div>
-      {/* Render second flight details if flight2id exists */}
       {booking.roundtrip === true && (
         <div>
           <h3 className="text-lg font-semibold mb-2">Return Flight Details</h3>
@@ -141,4 +138,4 @@ const BookingCard = ({ booking }) => {
   );
 };
 
-export default BookingCard;
+export default UserBookings;

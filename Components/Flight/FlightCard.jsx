@@ -31,8 +31,12 @@ const FlightCard = ({ flight }) => {
     <div className="card w-full h-fit bg-base-100 border border-slate-300 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">Flight Information</h2>
+        <div className="flex align-center items-center">
+          <img src={Airline.image} width={150} className="p-4" alt="Flight" />
+          <p className="font-bold">{Airline.name}</p>
+        </div>
         <h3 className="font-semibold">
-          {departureAirport.iata} - {arrivalAirport.iata}
+          {`${departureAirport.name} (${departureAirport.iata}) - ${arrivalAirport.name} (${arrivalAirport.iata})`}
         </h3>
         <p>
           <strong>Departure:</strong> {departureDate} {departureTime}
@@ -46,12 +50,7 @@ const FlightCard = ({ flight }) => {
         <p>
           <strong>Price:</strong> {formattedPrice}
         </p>
-        {/* Add more details if needed */}
       </div>
-      {/* You can customize the image or remove it based on your design */}
-      <figure>
-        <img src={Airline.image} width={200} className="p-4" alt="Flight" />
-      </figure>
     </div>
   );
 };

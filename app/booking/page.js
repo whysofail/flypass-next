@@ -26,7 +26,6 @@ const Booking = () => {
           }
           const data = await response.json();
           setBooking(data.booking);
-          setSearchResult(data);
         }
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -37,16 +36,15 @@ const Booking = () => {
 
   const handleSearchBookingByCode = async (bookingCode) => {
     try {
-      console.log(bookingCode);
-      const response = await axios.get(
-        `${baseURL}/search?bookingcode=${bookingCode}`, // Fixed baseURL
+      const response = await fetch(
+        `${baseURL}/bookings/search?bookingcode=${bookingCode}`, // Fixed baseURL
         {
           headers: {
             Authorization: `Bearer ${session.accessToken}`, // Used session.accessToken
           },
         },
       );
-      const searchData = response.data;
+      const searchData = await response.json();
       setSearchResult(searchData.booking);
     } catch (err) {
       console.error("Error searching booking by code:", err);
@@ -80,14 +78,18 @@ const Booking = () => {
         </button>
       </div>
 
-      {searchResult && searchResult.length > 0 && (
+      {searchQuery && searchResult.length > 0 ? (
         <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
           <h2 className="font-bold text-lg">Search Result</h2>
           {searchResult.map((booking, index) => (
             <UserBookings key={index} booking={booking} />
           ))}
         </div>
-      )}
+      ) : searchQuery && searchResult.length === 0 ? (
+        <div classNam e="py-24 flex flex-col w-full items-center justify-center gap-4">
+          <h2 className="font-bold text-lg">No Data Found</h2>
+        </div>
+      ) : null}
 
       {booking.length > 0 && (
         <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
@@ -95,12 +97,6 @@ const Booking = () => {
           {booking.map((booking, index) => (
             <UserBookings key={index} booking={booking} />
           ))}
-        </div>
-      )}
-
-      {searchResult && searchResult.length === 0 && (
-        <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
-          <h2 className="font-bold text-lg">No Data Found</h2>
         </div>
       )}
     </div>

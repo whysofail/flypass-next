@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDataFetching from "../../../Hooks/useDataFetching";
 import ReactSelect from "../../Searchbar/ReactSelect";
 import axios from "axios";
 
-const FlightForm = ({ flight }) => {
-  console.log(flight);
+const FlightForm = ({ flight, authToken }) => {
   const [formData, setFormData] = useState({
     flightCode: flight.flightCode,
     airlineId: flight.Airline?.id,
@@ -22,11 +21,20 @@ const FlightForm = ({ flight }) => {
     isAvailable: flight.isAvailable,
   });
   const baseURL = `http://localhost:5000/v1`;
-  const {
-    data: airline,
-    isLoading,
-    error,
-  } = useDataFetching(`${baseURL}/airlines`, null);
+  const [airline, setAirlines] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+          const airlines = await fetch(`${baseURL}/airlines`)
+          const data = await airlines.json()
+          setAirlines(data)
+        } catch (error) {
+          console.error(error)
+        }
+    };
+    fetchData()
+  },[]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,6 +81,7 @@ const FlightForm = ({ flight }) => {
         <ReactSelect
           options={loadOptionsAirlines}
           defaultValue={formData.airlineName}
+          defaultOptions
           onChange={(selectedValue) =>
             setFormData({ ...formData, airlineId: selectedValue.value })
           }

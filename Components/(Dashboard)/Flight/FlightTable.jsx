@@ -32,7 +32,7 @@ const FlightTable = ({ flights, onEditFlight, onDeleteFlight }) => {
     return (
       <>
         <td>{id}</td>
-        <td>{Airline?.name}</td>{" "}
+        <td>{Airline?.name}</td>
         <td style={{ width: 350 }}>{departureAirport?.name}</td>
         <td style={{ width: 350 }}>{arrivalAirport?.name}</td>
         <td style={{ width: 200 }}>{departureDate}</td>
@@ -66,7 +66,7 @@ const FlightTable = ({ flights, onEditFlight, onDeleteFlight }) => {
           className=""
           fixedHeaderContent={(index, flight) => (
             <tr className="bg-gray-400">
-              <th>No</th>
+              <th>Id</th>
               <th>Airline</th>
               <th>From</th>
               <th>To</th>

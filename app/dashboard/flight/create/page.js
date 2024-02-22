@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import FlightFormUpdate from "../../../../../Components/(Dashboard)/Flight/FlightFormUpdate";
-import { fetchData } from "../../../../../Helper/fetch";
+import FlightFormCreate from "../../../../Components/(Dashboard)/Flight/FlightFormCreate";
+import { fetchData } from "../../../../Helper/fetch";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 const page = ({ params }) => {
   const { data: session, status } = useSession();
   const [data, setData] = useState([]);
-  const url = `http://localhost:5000/v1/flights/${params.id}`;
+  const url = `http://localhost:5000/v1/flights/`;
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -30,7 +30,7 @@ const page = ({ params }) => {
       {data && data.length === 0 ? (
         "No data"
       ) : (
-        <FlightFormUpdate flight={data} authToken={session.accessToken} />
+        <FlightFormCreate flight={data} authToken={session.accessToken} />
       )}
     </>
   );

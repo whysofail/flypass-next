@@ -14,6 +14,7 @@ const ReactSelect = ({
   defaultValue,
   onChange,
   placeholder,
+  className,
 }) => {
   return (
     <AsyncSelect
@@ -23,7 +24,7 @@ const ReactSelect = ({
       loadOptions={options}
       value={value && [value]}
       onChange={onChange}
-      className="w-full"
+      className={`w-full ${className}`}
       classNamePrefix="react-select"
       placeholder={placeholder}
       components={{

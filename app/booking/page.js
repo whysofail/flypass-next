@@ -53,7 +53,7 @@ const Booking = () => {
 
   // Function to reset search result
   const resetSearch = () => {
-    setSearchResult(booking); // Changed to use booking state
+    setSearchResult(""); // Changed to use booking state
     setSearchQuery("");
   };
 
@@ -78,25 +78,29 @@ const Booking = () => {
         </button>
       </div>
 
-      {searchQuery && searchResult.length > 0 ? (
-        <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
-          <h2 className="font-bold text-lg">Search Result</h2>
-          {searchResult.map((booking, index) => (
-            <UserBookings key={index} booking={booking} />
-          ))}
-        </div>
-      ) : searchQuery && searchResult.length === 0 ? (
-        <div classNam e="py-24 flex flex-col w-full items-center justify-center gap-4">
-          <h2 className="font-bold text-lg">No Data Found</h2>
-        </div>
-      ) : null}
+      {searchResult.length > 0 || booking.length > 0 ? (
+        <>
+          {searchResult.length > 0 && (
+            <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
+              <h2 className="font-bold text-lg">Search Result</h2>
+              {searchResult.map((booking, index) => (
+                <UserBookings key={index} booking={booking} />
+              ))}
+            </div>
+          )}
 
-      {booking.length > 0 && (
+          {booking.length > 0 && (
+            <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
+              <h2 className="font-bold text-lg">Your Bookings</h2>
+              {booking.map((booking, index) => (
+                <UserBookings key={index} booking={booking} />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
         <div className="py-24 flex flex-col w-full items-center justify-center gap-4">
-          <h2 className="font-bold text-lg">Your Bookings</h2>
-          {booking.map((booking, index) => (
-            <UserBookings key={index} booking={booking} />
-          ))}
+          <h2 className="font-bold text-lg">No Data Found</h2>
         </div>
       )}
     </div>

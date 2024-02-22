@@ -10,7 +10,6 @@ const UserBookings = ({ booking }) => {
 
   const [isPassengerVisible, setIsPassengerVisible] = useState(false);
 
-  // Function to toggle passenger details visibility
   const togglePassengerVisibility = () => {
     setIsPassengerVisible(!isPassengerVisible);
   };

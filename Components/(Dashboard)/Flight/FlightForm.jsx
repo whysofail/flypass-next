@@ -45,7 +45,7 @@ const FlightForm = ({ flight, authToken }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `${baseURL}/flights/${flight.id}`, // Corrected: Used flight.id instead of id
+        `${baseURL}/flights/${flight.id}`, 
         qs.stringify(formData),
         {
           headers: {

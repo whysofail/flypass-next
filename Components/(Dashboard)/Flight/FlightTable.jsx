@@ -1,8 +1,9 @@
 "use client";
 import { TableVirtuoso } from "react-virtuoso";
+import FlightDeleteButton from "./FlightDeleteButton";
 import Link from "next/link";
 
-const FlightTable = ({ flights, onEditFlight, onDeleteFlight }) => {
+const FlightTable = ({ flights, authToken }) => {
   const renderItem = (index, flight) => {
     if (!flight) return null;
     const {
@@ -50,9 +51,7 @@ const FlightTable = ({ flights, onEditFlight, onDeleteFlight }) => {
           >
             Edit
           </Link>
-          <button className="btn btn-error" onClick={() => onDeleteFlight(id)}>
-            Delete
-          </button>
+          <FlightDeleteButton />
         </td>
       </>
     );
@@ -60,7 +59,7 @@ const FlightTable = ({ flights, onEditFlight, onDeleteFlight }) => {
 
   return (
     <div className="w-full">
-      <div className="table card bg-base-100 w-full border shadow-xl">
+      <div className="table table-zebra card bg-base-100 w-full border shadow-xl">
         <TableVirtuoso
           style={{ height: 500, width: "100%" }}
           className=""
